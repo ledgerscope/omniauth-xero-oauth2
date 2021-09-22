@@ -19,6 +19,14 @@ module OmniAuth
         options[:redirect_uri] || (full_host + script_name + callback_path)
       end
 
+      def connections_url #getter method
+        @connections_url
+      end
+    
+      def connections_url=(connections_url) #setter method
+        @connections_url = connections_url
+      end
+
       extra do
         {
           id_token: id_token,
@@ -58,7 +66,7 @@ module OmniAuth
       end
 
       def xero_tenants
-        @xero_tenants ||= JSON.parse(access_token.get("https://api.xero.com/connections", {'Authorization'=>('Bearer ' + access_token.token),'Accept'=>'application/json'}).body)
+        @xero_tenants ||= JSON.parse(access_token.get(@connections_url, {'Authorization'=>('Bearer ' + access_token.token),'Accept'=>'application/json'}).body)
       end
     end
   end
