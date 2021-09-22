@@ -11,6 +11,7 @@ jobs:
       - name: Update version
         run: |
           sed -i "s/VERSION = '1.0.1'/VERSION = '1.1.${{github.run_number}}'/g" lib/xero-oauth2/version.rb
+          sed -i "s/'1.0.2'/'1.1.${{github.run_number}}'/g" omniauth-xero-oauth2.gemspec
       - name: Setup Ruby
         uses: actions/setup-ruby@v1
         with:
