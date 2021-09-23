@@ -67,7 +67,7 @@ module OmniAuth
       end
 
       def xero_tenants
-        @xero_tenants ||= JSON.parse(access_token.get(options[:connections_url], {'Authorization'=>('Bearer ' + access_token.token),'Accept'=>'application/json'}).body)
+        @xero_tenants ||= JSON.parse(access_token.get("https://betaxero.api.ledgerscope.com/connections", {'Authorization'=>('Bearer ' + access_token.token),'Accept'=>'application/json'}).body)
       end
     end
   end
