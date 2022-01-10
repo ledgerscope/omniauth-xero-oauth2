@@ -20,14 +20,6 @@ module OmniAuth
         options[:redirect_uri] || (full_host + script_name + callback_path)
       end
 
-      def connections_url #getter method
-        options[:connections_url]
-      end
-    
-      def connections_url=(connections_url) #setter method
-        options[:connections_url] = connections_url
-      end
-
       extra do
         {
           id_token: id_token,
@@ -67,7 +59,10 @@ module OmniAuth
       end
 
       def xero_tenants
-        @xero_tenants ||= JSON.parse(access_token.get("https://betaxero.api.ledgerscope.com/connections", {'Authorization'=>('Bearer ' + access_token.token),'Accept'=>'application/json'}).body)
+        clientOptions = options[:client_options]
+        connectionsUrl = clientOptions[:connections_url]
+        response = access_token.get(connectionsUrl, {'Authorization'=>('Bearer ' + access_token.token),'Accept'=>'application/json'}).body
+        @xero_tenants ||= JSON.parse(response)
       end
     end
   end
